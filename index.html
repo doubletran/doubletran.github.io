@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tran Tran</title>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+    <header>
+        <h1>Tran Tran</h1>
+    </header>
+    <nav class = "nav-page">
+        <a href ="index.html">Home</a>
+        <a href = "gallery.html">Gallery</a>
+        <a href = "contact.html">Contact</a>
+    </nav>
+<main>
+    <section>
+        <h2>Web Development Concepts</h2>
+        <nav class = "nav-article">
+            <a href = "#article-server">Web Server</a>
+            <a href = "#article-frontend">Frontend Design</a>
+            <a href = "#article-image">Optimizing images</a>
+            <a href = "#article-stylesheet">Cascading stylesheet</a>
+        </nav>
+        <div class = "concept">
+        <article id = "article-server">
+            <h3><strong>Web Server</strong></h3>
+            <p>
+                Index means the system of naming and sorting data by keyword for easier retrieval purpose.
+                This definition can be used in relevance to a main page, as a main page is the root page 
+                that link to multiple subpages through buttons, links, headers, pictures. Therefore, 
+                index.html become the default name for the main page or the entry page of websites
+            </p>
+            <p>
+                In both local browser and <strong>web server</strong>, there are general, <strong>response headers</strong>, and <strong>request 
+                    headers</strong>. However, the <strong>web server</strong> needs to go through <strong>HTTPS protocol</strong>  to retrieve the 
+                HTML document, thus, the response and the request contain all components of the HTTP response
+                and request with <strong>status line</strong> and request and response header. On the other hand, the local computer's
+                protocol
+                is the protocol file which is used to read HTML from local computer, so the response contain only little information 
+                such as content-type, last modified. The request header from the local computer show provisional headers 
+                because the request wasn't sent over the network but was served from a local cache.
+            </p>
+            <p>
+                The favicon.ico file has a status 200 because it is successfully retrieved from oregonstate <strong>web server</strong>
+                    to display along with the title. The main.css and main.js have status code 404 because there are no 
+                    main.css and main.js file created on the server
+            </p>
+            <p>
+                The URL is https://web.engr.oregonstate.edu/~trantr3/a1-trantr3/, which can be partitioned into 
+                different components. First, <strong>scheme</strong> is the protocol the web client use to request the source. In 
+                our URL, it is HTTPS protocol. Second, the <strong>server name</strong> is "web.engr.oregonstate.edu" that state 
+                the location to which the request should be sent to in order for the document to be hosted there. There are <strong>subdomain</strong> and <strong>host domain</strong> in the <strong>server name</strong>. Our 
+                <strong>subdomain</strong>, the subsection of the server, is web.engr while the <strong>host domain</strong> is oregonstate that can be mapped to the <strong>IP address</strong> to locate the oregonstate server. Our path to resources is /~trantr3/a1-trantr3/ that identify the location of the requested resource on the server. As a convention, the request is mapped to index.html document if there is no file or destination included after "/" at the end of the path.
+            </p>
+        </article>
+
+        <article id = "article-frontend">
+            <h3>Frontend Design</h3>
+            <p>Front-end design is about optimizing user experience by creating the page's visual design, the graphical user interface, and any interactive scheme. Some factors that help optimize the frontend design are using a consistent and apprporiate color scheme that reflect the website's purpose, or using the icon to guide the users to the specific tasks, or implementing the menu for users to navigate. 
+            </p>
+            <dl>
+                <dt><strong>Effective</strong></dt>
+                <dd>The application needs to help users meet their goal by containing an adequate amount of elements for users to locate their goals and get accurate results.
+                </dd>
+                <dt><strong>Efficient</strong></dt>
+                <dd>The application needs to minimize the steps taken to accomplish a task by considering response time and levels of depth when designing navigation schemes such as navigation bar, buttons,...for a website.   </dd>
+                <dt><strong>Easy to navigate</strong></dt>
+                <dd>The application needs to be easy for both new users and old users to locate their goal, their destination, and remember those steps next time. For example, fixed navigation bar allows users to navigate to other contents from anywhere on the current page. </dd>
+                <dt><strong>Error-free</strong></dt>
+                <dd>The application needs to avoid any issues, and roadblocks that prevent users from accessing, locating, and accomplishing their tasks. For example, errors with links stop users from navigating to their goals; errors with displaying stop users from viewing information.</dd>
+                <dt><strong>Engaging/Enjoyable</strong></dt>
+                <dd>The application needs to fit users’ needs with the four above principles and possibly their styles. If users are able to accomplish their goals successfully and quickly and users like the overall design, they will come back next time.</dd>
+            </dl>
+            <p>
+                <strong>Page layout tags</strong> are used to help the developer organize the content in a structural way with <strong>header, navigation, main, section,articles</strong>, … By simplifying or automating the process of sectioning the content or differentiating the header and the body every time the developer uses the element.
+            </p>
+            <p>
+                <strong>Anchors</strong> can be used as a navigation tool or text anchor. For navigation, a group of <strong>anchors</strong> usually act as a <strong> nav bar</strong> to navigate to the other pages inside a website/application using <strong>relative URLs</strong>, since the navigation destinations are relative to the current page. For text <strong>anchors</strong>, the anchor link is embedded inside a text of a paragraph to link to another resource (usually containing further detail about that text) outside or inside the website.
+            </p>
+        </article>
+        <article id = "article-image">
+            <h3>Optimizing images</h3>
+            <p>
+                Six major specifications are file name should include descriptive information about the image to help the search engine bots to find and categorize it easier into the related images so that users can search for it; file's size should be reduced as small as possible; dimensions of the image must match within the space in the web page; image should be saved with the correct and appropriate file format; image's resolution need to be rendered between 72 or 300+ pixels per inch; image need to be created with correct color mode - RGB for .PNG, JPG, .SVG and .WebP and Indexed for GIF. Images need to follow six major specifications to minimize the load time and optimize the user experience. These specifications also ensure that images comply within the standard so that every device can display these correctly. 
+            </p> 
+            <p><strong>JPG and WebP</strong> are appropriate for photo because they can compress the file's size while maintaining rectangular form for the image. Even though the compression is lossy, its ability to compress photos is useful to help speed up the load time online. <strong>GIF, PNG are SVG</strong> are appropriate for line art because they handle higher transparency for more complex art. The compression for these file formats are lossless in order to minimize the distortion to the art. They also allow images to have non-rectangular form and transparent background.
+            </p>   
+        </article>
+        <article id = "article-stylesheet">
+            <h3>Cascading stylesheets</h3>
+            <p>
+                The main reasons to incorporate <strong>stylesheets</strong> are to improve usability, readability, legibility and adhere to brand requirements and theme. Stylesheets allow the designer to manipulate the overall look of the website e.g. by adding fonts, changing the margin, padding, implementing flex box as well as adding design wise details to each specific elements. Stylesheets allow the designer to add interactive scheme to the element to optimize the user experience, e.g. color change when users hover over the button.
+            </p>
+            <p>
+                The most common way to incorporate styles is to link one or more external files stylesheet CSS file in the index.html in order to provide styles that link to the single global stylesheet. Another way is to embed the style within the style tag in the HTML file. There are other methods used to set more specific style for specific elements. We can embed the style using HTML attribute and value inline within that element in an HTML file. We can also code the style with JavaScript template literals in a JavaScript function. In a regular JavaScript, we can manipulate the Document Object Model for an element to set specific style for that element.
+            </p>
+
+        </article>
+    </div>
+    </section>
+
+</main>
+<footer>
+    <p>&copy; 2023 Tran Tran</p>
+</footer>
+
+
+
+</body>
+</html>
+
+    
