@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ocean Visualization with Shader</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<header>
+  <h1>Ocean Visualization with Shader</h1>
+  <p>Visualizing ocean currents and temperatures with shaders</p>
+</header>
+
+<nav>
+  <a href="../index.html">Home</a>
+  <a href="ocean-visualization.html">Ocean Visualization</a>
+</nav>
+
+<main>
+  <h2>About the Project</h2>
+  <p>This project visualizes ocean flow and temperature by projecting oceanographic data onto a texture and applying a 2D Line Integral Convolution (LIC) technique to acquire the flow visualization.</p>
+
+  <h2>Implementation</h2>
+  <h3>Data Preparation with ArcGIS</h3>
+  <p>
+  ArcGIS Pro is a desktop application from Esri that provides exclusive access to Esri’s portal where millions of geographical databases are hosted and geoprocessing tools to extract and manipulate the data. Here, I use two raster layers: 
+  <a href="https://tiledimageservices.arcgis.com/P3ePLMYs2RVChkJx/arcgis/services/annual_drifter_mean_v3/ImageServer" target="_blank" style="color: #64b5f6;">Ocean Surface Currents</a> 
+  and <a href="https://tiledimageservices.arcgis.com/P3ePLMYs2RVChkJx/arcgis/services/Global_Sea_Surface_Temperature___Monthly_Mean__1982_2022_/ImageServer" target="_blank" style="color: #64b5f6;">Global Sea Surface Temperature</a> , then apply geoprocessing tools to combine these two layers into data that can be read into the shader pipeline.
+  </p>
+  
+  <h3>Project Raster to Point</h3>
+  <p>A raster layer is a layer consisting of data cells organized into rows and columns. Raster layers have different dimensions, sizes and units. Here, the temperature layer has a raster cell of size 27820m with 1441 rows and 2174 columns where the ocean surface current has cell sizes of 1 deg with 1440 x 158. Thus, the temperature layer need to be projected onto the currents layer with the same size as the cell. The resulting layer is 360 x 178. . Each point has the rounded x coordinate (ranging from -180, 180) and y coordinate (ranging from -90, 90),
+    Then, Raster to Point and Extract MultiValue to Point is used to extract the raster the cell to a list of points containing value from both layers: current direction and magnitude as well as temperature. 
+    </p>
+  <div class="image-container">
+    <img src="media/ocean-raster-arcgis.jpg" alt="A picture of two raster layers of ocean current and temperature in ArcGIS Pro">
+  </div>
+  
+
+  <h3>Encode Texture Information</h3>
+  <p>To encode the texture information, each point’s longitudinal and latitudinal coordinates are first converted into texture coordinates to accurately locate the corresponding pixel. Trigonometric calculations are then used to determine the x and y components of each vector based on its current direction. Once the data is extracted into a CSV file, a script reads the table and writes it into a raw texture file format, where the first 8 bytes store two 4-byte integers representing the S and T image dimensions, followed by the RGBA values for each texel. Each texel stores the x and y flow components, temperature, and magnitude in its respective RGBA channels.</p>
+
+  <h3>2D Line Integral Convolution (LIC) in Shader</h3>
+  <div class="image-container">
+    <img src="media/noise-tex.png" alt="White noise texture">
+  </div>
+  <p>The basemap and flow texture were sampled in the fragment shader. Displacement based on flow vectors created the LIC effect, visualizing the ocean currents, while land areas were rendered black.</p>
+
+  <h3>Encode Temperature</h3>
+  <p>Instead of random noise, a color-mapped temperature was added to the LIC texture to enhance visualization.</p>
+  <div class="image-container">
+    <img src="media/temp-noise-tex.jpg" alt="Temperature Noise Texture">
+  </div>
+  <!-- Embedded GIF or Visualization -->
+  <div style="width:360px;max-width:100%;margin: 2rem auto;">
+    <div style="height:0;padding-bottom:56.11%;position:relative;">
+      <iframe width="360" height="202" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" src="https://imgflip.com/embed/9qa1zj" allowfullscreen></iframe>
+    </div>
+    <p><a href="https://imgflip.com/gif/9qa1zj" style="color: #64b5f6;">View Animation on Imgflip</a></p>
+  </div>
+
+  <h2>References</h2>
+  <ul>
+    <li>ShadersForVisualization2.v5</li>
+    <li><a href="https://cs.cornell.edu/courses/cs4620/2021fa/glman/" style="color: #64b5f6;">Glman Home Page</a></li>
+  </ul>
+
+  <!-- Back Button -->
+  <a class="button" href="index.html">← Back to Home</a>
+</main>
+
+<footer>
+  &copy; 2025 Tran Tran. All rights reserved.
+</footer>
+
+</body>
+</html>
