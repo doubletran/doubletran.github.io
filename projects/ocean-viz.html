@@ -10,6 +10,7 @@
 <header>
   <h1>Ocean Visualization with Shader</h1>
   <p>Visualizing ocean currents and temperatures with shaders</p>
+  <a href="https://github.com/doubletran/Ocean-Viz-LIC" target="_blank" class="button">View Source Code on GitHub</a>
 </header>
 
 <nav>
@@ -22,48 +23,50 @@
   <p>This project visualizes ocean flow and temperature by projecting oceanographic data onto a texture and applying a 2D Line Integral Convolution (LIC) technique to acquire the flow visualization.</p>
 
   <h2>Implementation</h2>
-  <h3>Data Preparation with ArcGIS</h3>
+  <h3>1. Prepare ocean data with ArcGIS</h3>
   <p>
   ArcGIS Pro is a desktop application from Esri that provides exclusive access to Esri’s portal where millions of geographical databases are hosted and geoprocessing tools to extract and manipulate the data. Here, I use two raster layers: 
   <a href="https://tiledimageservices.arcgis.com/P3ePLMYs2RVChkJx/arcgis/services/annual_drifter_mean_v3/ImageServer" target="_blank" style="color: #64b5f6;">Ocean Surface Currents</a> 
-  and <a href="https://tiledimageservices.arcgis.com/P3ePLMYs2RVChkJx/arcgis/services/Global_Sea_Surface_Temperature___Monthly_Mean__1982_2022_/ImageServer" target="_blank" style="color: #64b5f6;">Global Sea Surface Temperature</a> , then apply geoprocessing tools to combine these two layers into data that can be read into the shader pipeline.
+  and <a href="https://tiledimageservices.arcgis.com/P3ePLMYs2RVChkJx/arcgis/services/Global_Sea_Surface_Temperature___Monthly_Mean__1982_2022_/ImageServer" target="_blank" style="color: #64b5f6;">Global Sea Surface Temperature</a>, then apply geoprocessing tools to combine these two layers into data that can be read into the shader pipeline.
   </p>
   
-  <h3>Project Raster to Point</h3>
-  <p>A raster layer is a layer consisting of data cells organized into rows and columns. Raster layers have different dimensions, sizes and units. Here, the temperature layer has a raster cell of size 27820m with 1441 rows and 2174 columns where the ocean surface current has cell sizes of 1 deg with 1440 x 158. Thus, the temperature layer need to be projected onto the currents layer with the same size as the cell. The resulting layer is 360 x 178. . Each point has the rounded x coordinate (ranging from -180, 180) and y coordinate (ranging from -90, 90),
-    Then, Raster to Point and Extract MultiValue to Point is used to extract the raster the cell to a list of points containing value from both layers: current direction and magnitude as well as temperature. 
+  <h3>2. Project Raster to Point</h3>
+  <p>Think of a raster like a giant grid — it’s made up of cells organized neatly into rows and columns. Each cell holds a value, like temperature or current speed, and different raster layers can have completely different sizes, resolutions, and units. Here, the temperature layer has a raster cell of size 27820m with 1441 rows and 2174 columns where the ocean surface current has cell sizes of 1 deg with 360 rows and 158 columns. Since the two layers don't share the same size, the Temperature layer need to be projected onto the Currents layer. The resulting layer has dimensions of 360 x 178. </p>
+  <p>
+    Next, I used <b>Raster to Point</b> and <b>Extract MultiValue to Point</b> to transform the raster cells into a list of points where each point holds value from both layers: current direction and magnitude as well as temperature. Each point also has x coordinate (ranging from -180, 180) and y coordinate (ranging from -90, 90).
     </p>
   <div class="image-container">
     <img src="media/ocean-raster-arcgis.jpg" alt="A picture of two raster layers of ocean current and temperature in ArcGIS Pro">
   </div>
   
 
-  <h3>Encode Texture Information</h3>
-  <p>To encode the texture information, each point’s longitudinal and latitudinal coordinates are first converted into texture coordinates to accurately locate the corresponding pixel. Trigonometric calculations are then used to determine the x and y components of each vector based on its current direction. Once the data is extracted into a CSV file, a script reads the table and writes it into a raw texture file format, where the first 8 bytes store two 4-byte integers representing the S and T image dimensions, followed by the RGBA values for each texel. Each texel stores the x and y flow components, temperature, and magnitude in its respective RGBA channels.</p>
+  <h3>3. Encode Texture Information</h3>
+  <p>Each point’s longitude and latitude are converted into texture coordinates allowing texture mapping to pixels. I use trigonometric calculations to calculate the x and y component of the flow vectors from the direction angle. Then, the data is written to the raw texture file format where each texel store X, Y, magnitude, and temperature in its RGBA values.</p>
 
-  <h3>2D Line Integral Convolution (LIC) in Shader</h3>
+  <h3>4. Apply 2D Line Integral Convolution (LIC) in Shader</h3>
+
+  <p>Line Integral Convolution is a visualization technique to show flow directions across a 2D field. The shader takes two texture – the background image to be smeared and the flow field texture where each point stores the direction of the flow. </p>
   <div class="image-container">
-    <img src="media/noise-tex.png" alt="White noise texture">
+    <img src="media/lic.png" alt="White noise texture">
   </div>
-  <p>The basemap and flow texture were sampled in the fragment shader. Displacement based on flow vectors created the LIC effect, visualizing the ocean currents, while land areas were rendered black.</p>
-
-  <h3>Encode Temperature</h3>
-  <p>Instead of random noise, a color-mapped temperature was added to the LIC texture to enhance visualization.</p>
+  <div class="gif-frame">
+    <img src="media/smearing.gif" alt="A sample GIF">
+  </div>
+  Here, instead of a normal white noise, I encode temperature value for some texels in the original white noise texture.
   <div class="image-container">
     <img src="media/temp-noise-tex.jpg" alt="Temperature Noise Texture">
   </div>
-  <div style="width:360px;max-width:100%;"><div style="height:0;padding-bottom:56.11%;position:relative;"><iframe width="360" height="202" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameBorder="0" src="https://imgflip.com/embed/9qbah8"></iframe></div><p><a href="https://imgflip.com/gif/9qbah8">via Imgflip</a></p></div>
-  <!-- Embedded GIF or Visualization -->
-  <div style="width:360px;max-width:100%;margin: 2rem auto;">
-    <div style="height:0;padding-bottom:56.11%;position:relative;">
-      <iframe width="360" height="202" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" src="https://imgflip.com/embed/9qa1zj" allowfullscreen></iframe>
-    </div>
-    <p><a href="https://imgflip.com/gif/9qa1zj" style="color: #64b5f6;">View Animation on Imgflip</a></p>
-  </div>
+  <p>The temperature-encoded noise texture and the flow texture are both passed into the shader pipeline. For each fragment, the shader displaces the current texture coordinate based on the flow vector in both the x and y directions. The color of the displaced texture coordinate is then sampled and applied to the current fragment.</p>
+
+ <h2>Final Result</h2>
+ <div class="gif-frame">
+  <img src="media/final.gif" alt="A sample GIF">
+</div>
 
   <h2>References</h2>
   <ul>
-    <li>ShadersForVisualization2.v5</li>
+   <li><a href="https://web.engr.oregonstate.edu/~mjb/cgeducation/ShadersBookSecond/">Mike Bailey and Steve Cunningham, Graphics Shaders: Theory and Practice, CRC Press, 2012.</a></li>
+    <li><a href="https://web.engr.oregonstate.edu/~mjb/WebMjb/Papers/ShadersForVisualization2.v5.pdf">Mike Bailey, Using GPU Shaders for Visualization, II</a></li>
     <li><a href="https://cs.cornell.edu/courses/cs4620/2021fa/glman/" style="color: #64b5f6;">Glman Home Page</a></li>
   </ul>
 
