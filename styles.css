@@ -32,7 +32,7 @@
     --accent: rgb(239, 208, 184);
     --dark: rgb(33, 55, 82);
     --medium: rgb(102, 184, 252);
-    --light: rgba(195, 221, 255, 0.738);
+    --light: rgba(195, 221, 255, 0.904);
     --yellow: rgb(151, 191, 65);
   }
   
@@ -257,10 +257,23 @@
 
 .feature-card{
   display: flex;
+  padding:20px 10px;
+}
+.feature-card a{
+  font-weight: bold;
+  font-size:120%;
+  display:block
+}
+.feature-card .overview{
+  max-width:50%;
+}
+.feature-card img{
+  padding:10px;
+ max-width:50%;
 }
 .github{
   background-color: var(--yellow);
-display: block;
+display:contents;
     padding: 10px 20px;
     border: none;
     border-radius: 8px;
