@@ -44,26 +44,35 @@
     background-repeat: no-repeat;
     background-size: cover;
     font-family: 'Roboto Mono', monospace;
+    font-size: small;
     color:var(--dark);
     margin:2% 5%;
     padding:5px 0;
     max-width:100%;
+    overflow-y:auto;
   }
-  
+  header{
+    display:flex;
+    justify-content: space-between;
+    max-height:150px;
+     flex-grow: 1;
+
+  }
+
   /*  ----- nav-page layout blocks -----  */
-  header {
-   text-align:end;
+  .header-name {
     font-family: 'Tilt Prism', cursive;
-    font-size:300%;
+    font-size:85px;
     letter-spacing: 10px;
-    max-height:100px;
     color:var(--dark);
-    margin:2px 0;
+ 
   }
   main {
     background-color: var(--light);
     width:100%;
     padding: 20px 20px;
+    display:block;
+     min-height: 100vh;  
     
   }
   section {}
@@ -90,18 +99,25 @@
   
   /* ----- Anchors ----- Text links */
   a {}
-  a:link {}
+  a:link {
+    text-decoration: none;
+  }
   a:hover { }
   a:active {}
-  a:visited {}
+  a:visited {
+    text-decoration: none;
+  }
   
   /*  ----- Navigation ----- Override text links for navigation only.  */
   nav {
+  margin-top:120px;
     font-family: 'Orbitron', sans-serif;
+    font-size: 150%;
+    
   }
   nav a {
-    text-decoration: none;
-    margin:10px 0;
+    font-weight: bold;
+    margin:10px;
   }
   nav a:active{
     background:var(--light);
@@ -109,34 +125,6 @@
   nav a:hover {
     opacity:0.5;
   }
-  .nav-page{
-    background: var(--dark);
-    
-    overflow:auto;
-    text-align:center;
-       font-size: 150%;
-
-  
-  }
-  .nav-page a{
-    text-decoration: none;
-    color: var(--light);
-   
-  }
-  .nav-article{
-    position:fixed;
-    bottom:130px;
-    float:left;
-    width:23%;
-    text-align:end;
-  }
-  .nav-article a{
-    background-color:var(--light);
-    font-size:110%;
-    padding: 2%;
-    display:block;
-  }
- 
 
   
   /*  -----  Typography  ----- */
@@ -250,27 +238,24 @@
   /*  ----- Classes for alignment, positioning, widths, grids, embellishments, and animation -----  */
   
   .gallery { 
-    display: flex;
-    flex-flow: row wrap;
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* Two equal columns */
+      gap: 20px; /* Space between columns */
+      padding: 20px;
   }
 
 
 .feature-card{
-  display: flex;
-  padding:20px 10px;
+ justify-content: center;
 }
 .feature-card a{
   font-weight: bold;
   font-size:120%;
-  display:block
 }
 .feature-card .overview{
-  max-width:50%;
-}
-.feature-card img{
   padding:10px;
- max-width:50%;
 }
+
 .github{
   background-color: var(--yellow);
 display:contents;
@@ -281,7 +266,8 @@ display:contents;
     font-weight: bold;
   margin: auto;
 }
-  
+
+
   .floatright {}
   .floatleft {}
   .center-middle {}
@@ -313,13 +299,10 @@ display:contents;
   /*   ===== PRINT  media query overrides previous styles =====  */
   @media print {}
   
-.gif-frame {
-  width: 50%; /* Set your desired width */
-  margin:auto;
 
-}
-.gif-frame img {
-  width: 100%;
-  height: 100%;
+.feature-card img, .feature-card video{
   object-fit: contain;
+  width:50%;
+  height: 50%;
+  margin-left: 25%;
 }
