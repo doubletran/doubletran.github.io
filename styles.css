@@ -107,7 +107,9 @@
   a:visited {
     text-decoration: none;
   }
-  
+  #current{
+    text-decoration: underline;
+  }
   /*  ----- Navigation ----- Override text links for navigation only.  */
   nav {
   margin-top:120px;
