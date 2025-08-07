@@ -253,6 +253,12 @@
 .feature-card a{
   font-weight: bold;
   font-size:120%;
+  text-decoration: underline;
+  text-decoration-style: double;
+  
+}
+.feature-card a:visited{
+  
 }
 .feature-card .overview{
   padding:10px;
