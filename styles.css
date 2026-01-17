@@ -307,10 +307,26 @@ display:contents;
   /*   ===== PRINT  media query overrides previous styles =====  */
   @media print {}
   
-
-.feature-card img, .feature-card video{
+ .feature-card video{
   object-fit: contain;
-  width:50%;
-  height: 50%;
-  margin-left: 25%;
+  width:60%;
+  height: 60%;
+  margin-left: 20%;
 }
+
+iframe, .feature-card img{
+  object-fit: contain;
+  width:500px;
+  max-height:400px;
+
+}
+
+iframe{
+  object-fit: contain;
+  width:500px;
+  height:200px;
+
+}
+
+
+
